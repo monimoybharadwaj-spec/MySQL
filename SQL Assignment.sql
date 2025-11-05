@@ -1,3 +1,85 @@
+## Question 1 : Explain the fundamental differences between DDL, DML, and DQL commands in SQL. 
+## Provide one example for each type of command. 
+
+## Answer : In SQL, commands are grouped based on their purpose. DDL (Data Definition Language) defines the structure 
+## of the database, DML (Data Manipulation Language) modifies the data within tables, and DQL (Data Query Language) retrieves 
+## data for viewing or analysis.
+## 1) DDL (Data Definition Language) - Used to define or modify the structure of database objects such as tables, schemas, or 
+## indexes. For example:  
+	CREATE TABLE Students (ID INT, Name VARCHAR(50));
+## 2) DML (Data Manipulation Language) - Used to insert, update, or delete data stored in database tables. For example: 
+	INSERT INTO Students VALUES (1, ‘Rahul’);
+## DQL (Data Query Language) - Used to retrieve data from the database based on specific conditions. For example: 
+	SELECT * FROM Students WHERE ID = 1;
+
+## Question 2 : What is the purpose of SQL constraints? Name and describe three common types of constraints, providing a 
+## simple scenario where each would be useful. 
+
+## Answer : SQL constraints are rules applied to table columns to maintain data accuracy and consistency in a database. 
+## They prevent invalid or duplicate data and help ensure relationships between tables are correct. 
+
+## PRIMARY KEY - Uniquely identifies each record in a table. For example, StudentID in a Students table can be used as a primary key.
+
+## FOREIGN KEY - Maintains referential integrity by linking one table to another. For instance, StudentID in a Marks table can refer 
+## to the Students table.
+
+## CHECK - Ensures that data in a column meets a specific condition. For example, a check constraint can make sure an 
+## employee’s Salary > 0.
+
+## Question 3 : Explain the difference between LIMIT and OFFSET clauses in SQL. How would you use them together to retrieve 
+## the third page of results, assuming each page has 10 records?
+
+## Answer : In SQL, the LIMIT clause is used to specify the maximum number of records to return from a query, while the OFFSET 
+## clause is used to skip a specific number of rows before starting to return the results. 
+##		When used together, they help in dividing results into pages. To retrieve the third page of results with 10 records 
+## per page, we skip the first 20 records (2 pages × 10 records each) and then fetch the next 10. Example: 
+	SELECT * FROM Students  
+	LIMIT 10 OFFSET 20;
+##		This query returns records 21 to 30, representing the third page of results.
+
+## Question 4 : What is a Common Table Expression (CTE) in SQL, and what are its main benefits? Provide a simple SQL example 
+## demonstrating its usage.
+
+## Answer : A Common Table Expression (CTE) is a temporary, named result set that is defined within the execution scope of 
+## a single SQL query. It is created using the WITH keyword and can be referenced like a regular table in a subsequent 
+## SELECT, INSERT, UPDATE, or DELETE statement. Main benefits of using a CTE:
+## 1) Makes complex queries easier to read and manage.
+## 2) Allows reusing the same temporary result multiple times within a query.
+## 3) Supports recursive queries, which are useful for working with hierarchical data (like employee-manager relationships).
+
+## Example : This query first creates a CTE named HighSalary containing employees earning more than ₹50,000, and then retrieves 
+## all records from it.
+WITH HighSalary AS (
+    SELECT Name, Salary 
+    FROM Employees 
+    WHERE Salary > 50000
+)
+SELECT * FROM HighSalary;
+
+## Question 5 : Describe the concept of SQL Normalization and its primary goals. Briefly explain the first three normal 
+## forms (1NF, 2NF, 3NF). 
+
+## Answer : SQL Normalization is the process of organizing data in a database to reduce redundancy and improve data integrity. 
+## It involves dividing large tables into smaller, related ones and defining relationships between them.
+## Primary goals of normalization:
+## 1) Eliminate duplicate data.
+## 2) Ensure data dependencies make sense.
+## 3) Simplify data maintenance and improve consistency.
+
+##		The first three normal forms are:
+
+## First Normal Form (1NF): Ensures that all columns contain only atomic (indivisible) values and each record is unique. 
+## Example: A student table should not have multiple phone numbers in one column.
+
+## Second Normal Form (2NF): Achieved when the table is in 1NF and all non-key attributes depend fully on the primary 
+## key (no partial dependency).
+## Example: In a table with a composite key, each non-key column must depend on the whole key, not just part of it.
+
+## Third Normal Form (3NF): Achieved when the table is in 2NF and all columns depend only on the primary key, not on other 
+## non-key attributes (no transitive dependency).
+## Example: In an employee table, DepartmentName should not depend on DepartmentID if DepartmentID already identifies it in another table.
+
+
 CREATE DATABASE Assignment;
 USE Assignment;
 
